@@ -1,7 +1,9 @@
 #include <thread>
-#include <Windows.h>
+#include "core/hooks.h"
 
 void Entry( HMODULE hModule ) {
+	Hooks::Init( );
+
 	while ( true ) {
 		if ( GetAsyncKeyState( VK_F11 ) )
 			break;
