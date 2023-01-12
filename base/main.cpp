@@ -3,6 +3,7 @@
 
 void Entry( HMODULE hModule ) {
 	Hooks::Init( );
+	//Displacement::Init( );
 
 	while ( true ) {
 		if ( GetAsyncKeyState( VK_F11 ) )
@@ -11,6 +12,8 @@ void Entry( HMODULE hModule ) {
 
 		std::this_thread::sleep_for( std::chrono::milliseconds( 200 ) );
 	}
+
+	FreeLibraryAndExitThread( hModule, EXIT_SUCCESS );
 }
 
 BOOL APIENTRY DllMain( HMODULE hModule, DWORD dwReason, LPVOID lpReserved ) {

@@ -1,5 +1,6 @@
 #pragma once
 #include "../dependencies/minhook/minhook.h"
+#include "../havoc.h"
 
 // just using minhook temporarily, will replace it later with manual VMT hooking
 // minhook library is extremely useful (and commonly used) in real-world software that hook functions.
@@ -26,9 +27,9 @@ public:
 };
 
 namespace Hooks {
-	inline CHooked GlDrawFrame{ };
 
-	void __cdecl hkGlDrawFrame( int w, int h );
+	inline CHooked GlDrawHud{ };
+	void __cdecl hkGlDrawHud( int w, int h, int curfps, int nquads, int curvert, bool underwater, int elapsed );
 
 	void Init( );
 }
