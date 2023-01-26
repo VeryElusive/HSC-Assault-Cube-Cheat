@@ -35,6 +35,16 @@ struct Vector2D {
 		return Vector2D( x - v, y - v );
 	}
 
+	__forceinline void operator-=( Vector2D v ) {
+		this->x -= v.x;
+		this->y -= v.y;
+	}
+
+	__forceinline void operator+=( Vector2D v ) {
+		this->x += v.x;
+		this->y += v.y;
+	}
+
 	Vector2D( ) {};
 
 	Vector2D( int x, int y ) : x( x ), y( y ) {};

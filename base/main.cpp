@@ -3,7 +3,6 @@
 
 void Entry( HMODULE hModule ) {
 	Hooks::Init( );
-	//Displacement::Init( );
 
 	while ( true ) {
 		if ( GetAsyncKeyState( VK_F11 ) )
