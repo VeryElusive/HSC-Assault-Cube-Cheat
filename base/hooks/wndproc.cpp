@@ -3,7 +3,7 @@
 #include "../menu/menu.h"
 #include "../core/displacement.h"
 
-void enableCursor( bool disable = false ) {
+void EnableCursor( bool disable = false ) {
 	const auto backup{ *Displacement::byte_593F19 };
 	*Displacement::byte_593F19 = !disable;
 
@@ -13,9 +13,12 @@ void enableCursor( bool disable = false ) {
 }
 
 LRESULT __stdcall Hooks::hkWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam ) {
+	if ( GetForegroundWindow( ) != ctx.hwnd )
+		return CallWindowProc( OldWndProc, hWnd, uMsg, wParam, lParam );
+
 	if ( uMsg == WM_KEYDOWN && wParam == VK_INSERT ) {
 		Menu::m_bOpened = !Menu::m_bOpened;
-		enableCursor( !Menu::m_bOpened );
+		EnableCursor( !Menu::m_bOpened );
 	}
 
 	if ( Menu::m_bOpened )

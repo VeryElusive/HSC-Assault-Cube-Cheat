@@ -12,18 +12,14 @@ void Hooks::Init( ) {
 		&hkGlDrawHud );	
 	
 
-	HMODULE hMod = GetModuleHandle( "opengl32.dll" );
+	/*HMODULE hMod = GetModuleHandle( "opengl32.dll" );
 
 	if ( hMod )
 		GlSwapBuffers.Hook(
 			reinterpret_cast< void* >( GetProcAddress( hMod, "wglSwapBuffers" ) ),
-			&hkGlSwapBuffers );
+			&hkGlSwapBuffers );*/
 
 
 
-	//GlSwapBuffers = ( uintptr_t ) mem::TrampolineHook( ( void* ) GetProcAddress( hMod, function ), hFunction, 5 );
-
-
-	//EnableNonClientDpiScaling( FindWindow( "SDL_app", NULL ) );
-	OldWndProc = ( WNDPROC )SetWindowLongPtr( FindWindow( "SDL_app", NULL ), GWL_WNDPROC, ( LONG_PTR )hkWndProc );
+	OldWndProc = ( WNDPROC )SetWindowLongPtr( ctx.hwnd, GWL_WNDPROC, ( LONG_PTR )hkWndProc );
 }

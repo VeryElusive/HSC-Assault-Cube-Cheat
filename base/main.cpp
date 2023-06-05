@@ -1,8 +1,14 @@
 #include <thread>
 #include "core/hooks.h"
 #include "utils/render.h"
+#include "menu/menu.h"
 
 void Entry( HMODULE hModule ) {
+	ctx.hwnd = FindWindow( "SDL_app", NULL );
+
+	CursorArrow = LoadCursor( 0, IDC_ARROW );
+	CursorResize = LoadCursor( 0, IDC_SIZENWSE );
+
 	Render::InitFonts( );
 	Hooks::Init( );
 

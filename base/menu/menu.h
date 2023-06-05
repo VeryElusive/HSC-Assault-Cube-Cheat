@@ -9,9 +9,13 @@
 #define ACCENTCOL2 Color( 182, 139, 252, m_flMenuAlpha * 255 )
 #define ACCENTCOL Color( 115, 155, 255, m_flMenuAlpha * 255 )
 
+inline HCURSOR CursorArrow;
+inline HCURSOR CursorResize;
+
 namespace Menu {
 	void Render( float elapsed );
 	void HandleControls( );
+	void SetCursor( bool resize );
 
 	/* main */
 	inline bool m_bOpened{ };
@@ -21,5 +25,6 @@ namespace Menu {
 	inline Vector2D m_vecPos{ };
 
 	/* control stuff */
-	inline bool m_bDraggingMouse{ };
+	inline bool m_bDraggingMenu{ };
+	inline bool m_bDraggingSize{ };
 }

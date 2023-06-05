@@ -1,14 +1,13 @@
 #include "input.h"
 
 void Input::Update( ) {
+	if ( GetForegroundWindow( ) != ctx.hwnd )
+		return;
+
 	for ( int i{ }; i < 256; ++i ) {
 		m_bPrevState[ i ] = m_bState[ i ];
 		m_bState[ i ] = GetAsyncKeyState( i );
 	}
-
-	static HWND hwnd{ };
-	if ( !hwnd )
-		hwnd = FindWindow( "SDL_app", NULL );
 
 	POINT mouse{ };
 	GetCursorPos( &mouse );
@@ -20,6 +19,7 @@ void Input::Update( ) {
 }
 
 bool Input::Hovered( Vector2D pos, Vector2D size ) {
+	pos.y += 8;// idk why this is messing up
 	return ( m_vecMousePos > pos && m_vecMousePos < pos + size );
 }
 

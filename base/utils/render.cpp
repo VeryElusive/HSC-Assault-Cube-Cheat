@@ -25,12 +25,10 @@ void Render::InitFonts( ) {
     if ( Fonts::Menu.hdc == wglGetCurrentDC( ) )
         return;
 
-    Fonts::Menu.Setup( "Verdana", 12, FW_MEDIUM, NONANTIALIASED_QUALITY );
+    Fonts::Menu.Setup( "Verdana", 16, FW_MEDIUM, NONANTIALIASED_QUALITY );
 }
 
 void Render::Rect( Vector2D pos, Vector2D size, Color col ) {
-    //size *= ANTISCALING;
-
     glColor4ub( col.r, col.g, col.b, col.a );
 
     glBegin( GL_LINE_LOOP );
@@ -44,7 +42,10 @@ void Render::Rect( Vector2D pos, Vector2D size, Color col ) {
 }
 
 void Render::RectFilled( Vector2D pos, Vector2D size, Color col ) {
-    //size *= ANTISCALING;
+    // GL_QUADS size differs to GL_LINE_LOOP
+    pos -= 1;
+    size.x += 1;
+    size.y += 2;
 
     glColor4ub( col.r, col.g, col.b, col.a );
 
@@ -59,9 +60,6 @@ void Render::RectFilled( Vector2D pos, Vector2D size, Color col ) {
 }
 
 void Render::Line( Vector2D pos, Vector2D pos2, Color col ) {
-    //pos2 *= ANTISCALING;
-    //pos2.x *= ANTISCALING;
-
     glColor4ub( col.r, col.g, col.b, col.a );
 
     glBegin( GL_LINES );

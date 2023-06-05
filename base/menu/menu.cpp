@@ -25,18 +25,44 @@ void Menu::Render( float elapsed ) {
 	Render::Line( m_vecPos + Vector2D( 1, 49 ), m_vecPos + Vector2D( m_vecSize.x - 2, 49 ), DARKOUTLINECOL );
 
 
-	Fonts::Menu.Render( m_vecPos, ACCENTCOL, "HAVOC" );
+	Fonts::Menu.Render( m_vecPos + Vector2D( m_vecSize.x / 2 - 5 * 5, 25 ), ACCENTCOL, "HAVOC" );
 }
-
 
 void Menu::HandleControls( ) {
 	const bool topBarHovered{ Input::Hovered( m_vecPos, { m_vecSize.x, 50 } ) };
 
-	if ( !m_bDraggingMouse && Input::Pressed( VK_LBUTTON ) && topBarHovered )
-		m_bDraggingMouse = true;
+	if ( !m_bDraggingMenu && Input::Pressed( VK_LBUTTON ) && topBarHovered )
+		m_bDraggingMenu = true;
 
-	else if ( m_bDraggingMouse && Input::Down( VK_LBUTTON ) )
+	else if ( m_bDraggingMenu && Input::Down( VK_LBUTTON ) )
 		m_vecPos -= Input::m_vecMouseDelta;
-	else if ( m_bDraggingMouse && !Input::Down( VK_LBUTTON ) )
-		m_bDraggingMouse = false;
+	else if ( m_bDraggingMenu && !Input::Down( VK_LBUTTON ) )
+		m_bDraggingMenu = false;
+
+
+	const bool BottomCornerHovered{ Input::Hovered( m_vecPos + m_vecSize - Vector2D( 20, 20 ), Vector2D( 20, 20 ) ) };
+
+	if ( BottomCornerHovered || m_bDraggingSize ) {
+		SetCursor( true );
+
+		if ( Input::Down( VK_LBUTTON ) ) {
+			m_bDraggingSize = true;
+			m_vecSize += Vector2D( Input::m_vecMousePos - ( m_vecPos + m_vecSize ) );
+		}
+		else
+			m_bDraggingSize = false;
+		
+	}
+	else
+		SetCursor( false );
+
+	m_vecSize.x = std::clamp( static_cast< int >( m_vecSize.x ), 550, 1000 );
+	m_vecSize.y = std::clamp( static_cast< int >( m_vecSize.y ), 420, 1000 );
+}
+
+void Menu::SetCursor( bool resize ) {
+	if ( resize )
+		SetCursor( CursorResize );
+	else
+		SetCursor( CursorArrow );
 }
