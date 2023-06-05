@@ -2,30 +2,35 @@
 #include "../core/displacement.h"
 
 void Render::BeginDraw( ) {
-    // switch to 2D drawing
-    glDisable( GL_DEPTH_TEST );
-
-    glMatrixMode( GL_MODELVIEW );
-    glLoadIdentity( );
-
+    GLint viewport[ 4 ];
+    glGetIntegerv( GL_VIEWPORT, viewport );
+    glViewport( 0, 0, viewport[ 2 ], viewport[ 3 ] );
     glMatrixMode( GL_PROJECTION );
     glLoadIdentity( );
-    glOrtho( 0, **reinterpret_cast<int**>( Displacement::VIRTW ), 1800, 0, -1, 1 ); //VIRTH: 1800.f, 
+    glOrtho( 0, viewport[ 2 ], viewport[ 3 ], 0, -1, 1 );
+    glMatrixMode( GL_MODELVIEW );
+    glLoadIdentity( );
+    glDisable( GL_DEPTH_TEST );
     glEnable( GL_BLEND );
+
+    glDisable( 0x809D ); // disables anti aliasing, microsoft removed the macro, but didnt actually remove the code behind the flag
+    glDisable( GL_LINE_SMOOTH );
 }
 
 void Render::EndDraw( ) {
-    glLoadIdentity( );
-    glOrtho( 0, **reinterpret_cast< int** >( Displacement::VIRTW ), 1800, 0, -1, 1 );
-
-    glDisable( GL_BLEND );
-    glDisable( GL_TEXTURE_2D );
     glEnable( GL_DEPTH_TEST );
+}
 
-    glMatrixMode( GL_MODELVIEW );
+void Render::InitFonts( ) {
+    if ( Fonts::Menu.hdc == wglGetCurrentDC( ) )
+        return;
+
+    Fonts::Menu.Setup( "Verdana", 12, FW_MEDIUM, NONANTIALIASED_QUALITY );
 }
 
 void Render::Rect( Vector2D pos, Vector2D size, Color col ) {
+    //size *= ANTISCALING;
+
     glColor4ub( col.r, col.g, col.b, col.a );
 
     glBegin( GL_LINE_LOOP );
@@ -39,6 +44,8 @@ void Render::Rect( Vector2D pos, Vector2D size, Color col ) {
 }
 
 void Render::RectFilled( Vector2D pos, Vector2D size, Color col ) {
+    //size *= ANTISCALING;
+
     glColor4ub( col.r, col.g, col.b, col.a );
 
     glBegin( GL_QUADS );
@@ -50,3 +57,84 @@ void Render::RectFilled( Vector2D pos, Vector2D size, Color col ) {
 
     glEnd( );
 }
+
+void Render::Line( Vector2D pos, Vector2D pos2, Color col ) {
+    //pos2 *= ANTISCALING;
+    //pos2.x *= ANTISCALING;
+
+    glColor4ub( col.r, col.g, col.b, col.a );
+
+    glBegin( GL_LINES );
+    glVertex2f( ( float )pos.x, ( float )pos.y );
+    glVertex2f( ( float )pos2.x, ( float )pos2.y );
+    glEnd( );
+}
+
+void Render::Text( const char* str, Vector2D pos, Color col ) {
+    /*int str@<edx>,
+        _BYTE *left@<ecx>,
+        int top,
+        GLubyte r,
+        GLubyte g,
+        char b,
+        GLubyte alpha,
+        int cursor,
+        int maxwidth
+    */
+
+    const auto left{ pos.x };
+    const auto alpha{ col.a };
+    const auto b{ col.b };
+    const auto g{ col.g };
+    const auto r{ col.r };
+    const auto top{ pos.y };
+
+
+    // REFERENCE: 68 ? ? ? ? 50 E8 ? ? ? ? 6A FF 6A FF FF 35 ? ? ? ? BA
+    __asm {
+        push    str;
+        push    eax;
+        call    Displacement::defformatstring;
+
+        // now call draw_text
+
+        push 0xFFFFFFFF; maxwidth;
+        push 0xFFFFFFFF; cursor;
+        push alpha;
+
+        mov edx, 0x28;
+        lea ecx, left;
+
+        push b;
+        push g;
+        push r;
+        push top;
+
+        call Displacement::draw_text;
+
+        add esp, 0x1C;
+    }
+}
+
+
+/*__asm {
+        push edx
+        push ecx
+
+        mov ecx, left
+        mov edx, str
+
+        push -1 ; maxwidth
+        push -1 ; cursor
+        push alpha
+        push b
+        push g
+        push r
+        push top
+
+        mov eax, Displacement::draw_text
+
+        call eax
+
+        add esp, 0x124
+    }*/

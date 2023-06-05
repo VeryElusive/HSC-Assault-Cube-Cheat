@@ -8,13 +8,13 @@ void Input::Update( ) {
 
 	static HWND hwnd{ };
 	if ( !hwnd )
-		hwnd = FindWindowA( "AssaultCube", 0 );
+		hwnd = FindWindow( "SDL_app", NULL );
 
 	POINT mouse{ };
 	GetCursorPos( &mouse );
-	ScreenToClient( hwnd, &mouse );
+	//ScreenToClient( hwnd, &mouse );
 
-	m_vecMouseDelta = m_vecMousePos - Vector2D( mouse.x, mouse.y );
+	m_vecMouseDelta = m_vecMousePos - (Vector2D( mouse.x, mouse.y ) );
 
 	m_vecMousePos = Vector2D( mouse.x, mouse.y );
 }

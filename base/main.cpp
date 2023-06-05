@@ -1,7 +1,9 @@
 #include <thread>
 #include "core/hooks.h"
+#include "utils/render.h"
 
 void Entry( HMODULE hModule ) {
+	Render::InitFonts( );
 	Hooks::Init( );
 
 	while ( true ) {
@@ -11,6 +13,11 @@ void Entry( HMODULE hModule ) {
 
 		std::this_thread::sleep_for( std::chrono::milliseconds( 200 ) );
 	}
+
+	MH_DisableHook( MH_ALL_HOOKS );
+	MH_RemoveHook( MH_ALL_HOOKS );
+
+	MH_Uninitialize( );
 
 	FreeLibraryAndExitThread( hModule, EXIT_SUCCESS );
 }

@@ -26,10 +26,15 @@ public:
 	void* m_pOriginal{ };
 };
 
+#define NEW_HOOK(name, returnVal, callingConvention) inline CHooked name{ }; returnVal callingConvention hk##name(
+
 namespace Hooks {
 
-	inline CHooked GlDrawHud{ };
-	void __cdecl hkGlDrawHud( int w, int h, int curfps, int nquads, int curvert, bool underwater, int elapsed );
+	NEW_HOOK( GlDrawHud, void, __cdecl ) int w, int h, int curfps, int nquads, int curvert, bool underwater, int elapsed );
+	NEW_HOOK( GlSwapBuffers, bool, __stdcall ) HDC hDc );
+
+	inline WNDPROC OldWndProc{ };
+	LRESULT __stdcall	hkWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
 
 	void Init( );
 }
