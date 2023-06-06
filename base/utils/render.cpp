@@ -1,5 +1,6 @@
 #include "render.h"
 #include "../core/displacement.h"
+#include "../menu/menu.h"
 
 void Render::BeginDraw( ) {
     GLint viewport[ 4 ];
@@ -26,9 +27,13 @@ void Render::InitFonts( ) {
         return;
 
     Fonts::Menu.Setup( "Verdana", 16, FW_MEDIUM, NONANTIALIASED_QUALITY );
+    Fonts::Tabs.Setup( "test2", 35, FW_NORMAL, ANTIALIASED_QUALITY );
 }
 
 void Render::Rect( Vector2D pos, Vector2D size, Color col ) {
+    if ( Menu::m_bRendering )
+        col.a *= Menu::m_flAlpha;
+
     glColor4ub( col.r, col.g, col.b, col.a );
 
     glBegin( GL_LINE_LOOP );
@@ -42,6 +47,9 @@ void Render::Rect( Vector2D pos, Vector2D size, Color col ) {
 }
 
 void Render::RectFilled( Vector2D pos, Vector2D size, Color col ) {
+    if ( Menu::m_bRendering )
+        col.a *= Menu::m_flAlpha;
+
     // GL_QUADS size differs to GL_LINE_LOOP
     pos -= 1;
     size.x += 1;
@@ -60,6 +68,9 @@ void Render::RectFilled( Vector2D pos, Vector2D size, Color col ) {
 }
 
 void Render::Line( Vector2D pos, Vector2D pos2, Color col ) {
+    if ( Menu::m_bRendering )
+        col.a *= Menu::m_flAlpha;
+
     glColor4ub( col.r, col.g, col.b, col.a );
 
     glBegin( GL_LINES );

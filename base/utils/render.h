@@ -10,6 +10,7 @@
 
 namespace Fonts {
 	inline CFont Menu{ };
+	inline CFont Tabs{ };
 }
 
 namespace Render {

@@ -1,35 +1,39 @@
 #include "menu.h"
 #include "../core/displacement.h"
 
-
 void Menu::Render( float elapsed ) {
-	if ( m_flMenuAlpha >= 0 && !m_bOpened )
-		m_flMenuAlpha -= 5.f * elapsed;
-	else if ( m_flMenuAlpha <= 1 && m_bOpened )
-		m_flMenuAlpha += 5.f * elapsed;
+	if ( m_flAlpha >= 0 && !m_bOpened )
+		m_flAlpha -= 5.f * elapsed;
+	else if ( m_flAlpha <= 1 && m_bOpened )
+		m_flAlpha += 5.f * elapsed;
 
-	m_flMenuAlpha = std::max( std::min( m_flMenuAlpha, 1.f ), 0.f );
+	m_flAlpha = std::clamp( m_flAlpha, 0.f, 1.f );
 
-	if ( m_flMenuAlpha <= 0 )
+	if ( m_flAlpha <= 0 )
 		return;
 
 	HandleControls( );
 
-	Render::Rect( m_vecPos - Vector2D( 1, 1 ), m_vecSize + 2, DARKOUTLINECOL );
-	Render::Rect( m_vecPos, m_vecSize, LIGHTOUTLINECOL );
-	Render::Rect( m_vecPos + 1, m_vecSize - Vector2D( 2, 2 ), DARKOUTLINECOL );
-	Render::RectFilled( m_vecPos + 2, m_vecSize - Vector2D( 4, 4 ), BACKGROUNDCOL );
+	m_bRendering = true;
 
-	Render::Line( m_vecPos + Vector2D( 1, 51 ), m_vecPos + Vector2D( m_vecSize.x - 2, 51 ), DARKOUTLINECOL );
-	Render::Line( m_vecPos + Vector2D( 0, 50 ), m_vecPos + Vector2D( m_vecSize.x, 50 ), LIGHTOUTLINECOL );
-	Render::Line( m_vecPos + Vector2D( 1, 49 ), m_vecPos + Vector2D( m_vecSize.x - 2, 49 ), DARKOUTLINECOL );
+	Render::Rect( m_vecPos - Vector2D( 1, 1 ), m_vecSize + 2, OUTLINE_DARK );
+	Render::Rect( m_vecPos, m_vecSize, OUTLINE_LIGHT );
+	Render::Rect( m_vecPos + 1, m_vecSize - Vector2D( 2, 2 ), OUTLINE_DARK );
+	Render::RectFilled( m_vecPos + 2, m_vecSize - Vector2D( 4, 4 ), BACKGROUND );
 
+	Render::Line( m_vecPos + Vector2D( 1, HEADER + 1 ), m_vecPos + Vector2D( m_vecSize.x - 2, HEADER + 1 ), OUTLINE_DARK );
+	Render::Line( m_vecPos + Vector2D( 0, HEADER ), m_vecPos + Vector2D( m_vecSize.x, HEADER ), OUTLINE_LIGHT );
+	Render::Line( m_vecPos + Vector2D( 1, HEADER - 1 ), m_vecPos + Vector2D( m_vecSize.x - 2, HEADER - 1 ), OUTLINE_DARK );
 
-	Fonts::Menu.Render( m_vecPos + Vector2D( m_vecSize.x / 2 - 5 * 5, 25 ), ACCENTCOL, "HAVOC" );
+	Fonts::Menu.Render( m_vecPos + Vector2D( m_vecSize.x / 2 - 5 * 5, 25 ), ACCENT, "HAVOC" );
+
+	RenderElements( );
+
+	m_bRendering = false;
 }
 
 void Menu::HandleControls( ) {
-	const bool topBarHovered{ Input::Hovered( m_vecPos, { m_vecSize.x, 50 } ) };
+	const auto topBarHovered{ Input::Hovered( m_vecPos, { m_vecSize.x, 50 } ) };
 
 	if ( !m_bDraggingMenu && Input::Pressed( VK_LBUTTON ) && topBarHovered )
 		m_bDraggingMenu = true;
@@ -40,9 +44,9 @@ void Menu::HandleControls( ) {
 		m_bDraggingMenu = false;
 
 
-	const bool BottomCornerHovered{ Input::Hovered( m_vecPos + m_vecSize - Vector2D( 20, 20 ), Vector2D( 20, 20 ) ) };
+	const auto bottomCornerHovered{ Input::Hovered( m_vecPos + m_vecSize - Vector2D( 20, 20 ), Vector2D( 20, 20 ) ) };
 
-	if ( BottomCornerHovered || m_bDraggingSize ) {
+	if ( bottomCornerHovered || m_bDraggingSize ) {
 		SetCursor( true );
 
 		if ( Input::Down( VK_LBUTTON ) ) {

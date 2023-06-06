@@ -11,6 +11,7 @@ void Entry( HMODULE hModule ) {
 
 	Render::InitFonts( );
 	Hooks::Init( );
+	Menu::Register( );
 
 	while ( true ) {
 		if ( GetAsyncKeyState( VK_F11 ) )

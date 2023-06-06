@@ -1,5 +1,6 @@
 #pragma once
 #include "gl_text.h"
+#include "../menu/menu.h"
 
 void CFont::Setup( const char* fontName, int height, int weight, int quality ) {
 	hdc = wglGetCurrentDC( );
@@ -14,6 +15,9 @@ void CFont::Setup( const char* fontName, int height, int weight, int quality ) {
 }
 
 void CFont::Render( Vector2D pos, Color col, const char* text, bool centered ) {
+	if ( Menu::m_bRendering )
+		col.a *= Menu::m_flAlpha;
+
 	glColor4ub( col.r, col.g, col.b, col.a );
 	glRasterPos2f( pos.x, pos.y );
 

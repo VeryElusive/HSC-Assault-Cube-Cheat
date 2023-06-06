@@ -22,6 +22,8 @@
     <ClCompile Include="hooks\gl_drawhud.cpp" />
     <ClCompile Include="hooks\wndproc.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="menu\controls\group.cpp" />
+    <ClCompile Include="menu\elements.cpp" />
     <ClCompile Include="menu\menu.cpp" />
     <ClCompile Include="utils\gl_text.cpp" />
     <ClCompile Include="utils\render.cpp" />
@@ -40,6 +42,8 @@
     <ClInclude Include="dependencies\minhook\hde\table64.h" />
     <ClInclude Include="dependencies\minhook\minhook.h" />
     <ClInclude Include="dependencies\minhook\trampoline.h" />
+    <ClInclude Include="menu\controls\group.h" />
+    <ClInclude Include="menu\controls\tabs.h" />
     <ClInclude Include="menu\menu.h" />
     <ClInclude Include="sdk\color.h" />
     <ClInclude Include="sdk\vector.h" />
