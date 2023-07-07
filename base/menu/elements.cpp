@@ -1,4 +1,5 @@
 #include "menu.h"
+#include "abuse.h"
 
 void Menu::Register( ) {
 	m_cTabs[ 0 ].m_szName = "A";
@@ -11,9 +12,11 @@ void Menu::Register( ) {
 	{
 		auto generalGroup{ aimbot->AddGroup( "General", 1.f ) };
 		{
-			generalGroup->Register( ( "Checkbox" ), &ctx.m_cConfigs.m_bAimbotEnable );
-			generalGroup->Register( ( "Slider float" ), &ctx.m_cConfigs.m_flAimbotFOV, 0, 100 );
-			generalGroup->Register( ( "Slider int" ), &ctx.m_cConfigs.m_iAimbotSlider, 0, 100 );
+			generalGroup->Register( ( "Checkbox" ), &ctx.m_cConfig.m_bAimbotEnable );
+			generalGroup->Register( ( "Slider float" ), &ctx.m_cConfig.m_flAimbotFOV, 0, 100 );
+			generalGroup->Register( ( "Slider int" ), &ctx.m_cConfig.m_iAimbotSlider, 0, 100 );
+			generalGroup->Register( ( "Combo" ), &ctx.m_cConfig.m_iAimbotCombo, 4, comboElements );
+			generalGroup->Register( ( "Multi combo" ), 5, multiComboElements );
 		}
 		auto otherGroup{ aimbot->AddGroup( "Other", 0.6f ) };
 		auto other2Group{ aimbot->AddGroup( "Other", 0.4f ) };
@@ -118,7 +121,7 @@ void Menu::RenderElements( ) {
 		}
 	}
 
-	Render::RectFilled( m_vecPos + Vector2D{ BAR_SIZE, MARGIN }, m_vecSize - Vector2D{ BAR_SIZE, MARGIN * 2 }, BACKGROUND.Alpha( Menu::m_pFocusItem.m_flFocusAnim * 0.7f * 255.f ) );
+	Render::RectFilled( m_vecPos + Vector2D{ BAR_SIZE + 1, MARGIN - 1 }, m_vecSize - Vector2D{ BAR_SIZE + MARGIN, MARGIN * 2 - 3 }, BACKGROUND.Alpha( Menu::m_pFocusItem.m_flFocusAnim * 0.7f * 255.f ) );
 
 	if ( Menu::m_pFocusItem.m_pItem ) {
 		auto& element{ *Menu::m_pFocusItem.m_pItem };

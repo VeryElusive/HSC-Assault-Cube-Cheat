@@ -27,7 +27,7 @@ void CFont::Render( Vector2D pos, Color col, const char* text, EAlignment alignm
 	//pos.x += 51;
 	//pos.y += 40;
 
-	pos.y += 8;
+	pos.y += 10;
 
 	if ( Menu::m_bRendering )
 		col.a *= Menu::m_flAlpha;

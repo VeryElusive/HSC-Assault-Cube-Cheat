@@ -13,7 +13,7 @@
 
 struct Context_t {
 	HWND hwnd;
-	Config_t m_cConfigs{ };
+	Config_t m_cConfig{ };
 	float m_flElapsed{ };
 };
 

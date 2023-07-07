@@ -94,13 +94,13 @@ void CMenuItem::RenderFocus( ) {
 	case SLIDER_INT:
 		SliderIntFocus( );
 		break;
-		/*case COMBO:
+	case COMBO:
 		ComboFocus( );
 		break;
 	case MULTI_COMBO:
 		MultiComboFocus( );
 		break;
-	case KEY_BIND:
+		/*case KEY_BIND:
 		KeybindFocus( );
 		break;
 	case COLOR_PICKER:
@@ -125,13 +125,13 @@ void CMenuItem::Render( ) {
 	case SLIDER_INT:
 		SliderInt( );
 		break;
-		/*case COMBO:
+		case COMBO:
 		Combo( );
 		break;
 	case MULTI_COMBO:
 		MultiCombo( );
 		break;
-	case KEY_BIND:
+		/*case KEY_BIND:
 		Keybind( );
 		break;
 	case COLOR_PICKER:

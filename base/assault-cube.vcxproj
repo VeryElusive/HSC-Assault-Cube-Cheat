@@ -23,7 +23,9 @@
     <ClCompile Include="hooks\wndproc.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="menu\controls\checkbox.cpp" />
+    <ClCompile Include="menu\controls\combo.cpp" />
     <ClCompile Include="menu\controls\group.cpp" />
+    <ClCompile Include="menu\controls\multicombo.cpp" />
     <ClCompile Include="menu\controls\slider.cpp" />
     <ClCompile Include="menu\elements.cpp" />
     <ClCompile Include="menu\menu.cpp" />
@@ -45,6 +47,7 @@
     <ClInclude Include="dependencies\minhook\hde\table64.h" />
     <ClInclude Include="dependencies\minhook\minhook.h" />
     <ClInclude Include="dependencies\minhook\trampoline.h" />
+    <ClInclude Include="menu\abuse.h" />
     <ClInclude Include="menu\controls\argument_types.h" />
     <ClInclude Include="menu\controls\containers.h" />
     <ClInclude Include="menu\menu.h" />

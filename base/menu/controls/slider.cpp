@@ -33,7 +33,7 @@ void CMenuItem::SliderFloat( ) {
 
 	value = std::clamp( value, args.m_flMin, args.m_flMax );
 
-	Fonts::Menu.Render( Menu::m_pFocusItem.m_vecDrawPos, Color( 255, 255, 255 ), m_szName, LEFT );
+	Fonts::Menu.Render( Menu::m_vecDrawPos, Color( 255, 255, 255 ), m_szName, LEFT );
 	Menu::m_vecDrawPos.y += 16;
 	const auto hovered{ Input::Hovered( Menu::m_vecDrawPos, size ) };
 
