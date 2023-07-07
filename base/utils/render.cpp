@@ -26,8 +26,13 @@ void Render::InitFonts( ) {
     if ( Fonts::Menu.hdc == wglGetCurrentDC( ) )
         return;
 
-    Fonts::Menu.Setup( "Verdana", 16, FW_MEDIUM, NONANTIALIASED_QUALITY );
     Fonts::Tabs.Setup( "test2", 35, FW_NORMAL, ANTIALIASED_QUALITY );
+    Fonts::Menu.Setup( "Bitstream Vera Sans Mono", 10, FW_DONTCARE, NONANTIALIASED_QUALITY );
+}
+
+void Render::SetClipping( Vector2D pos, Vector2D size ) {
+    glEnable( GL_SCISSOR_TEST );
+    glScissor( pos.x, pos.y, size.x, size.y );
 }
 
 void Render::Rect( Vector2D pos, Vector2D size, Color col ) {
@@ -51,9 +56,9 @@ void Render::RectFilled( Vector2D pos, Vector2D size, Color col ) {
         col.a *= Menu::m_flAlpha;
 
     // GL_QUADS size differs to GL_LINE_LOOP
-    pos -= 1;
-    size.x += 1;
-    size.y += 2;
+    //pos -= 1;
+    //size.x += 1;
+    //size.y += 2;
 
     glColor4ub( col.r, col.g, col.b, col.a );
 

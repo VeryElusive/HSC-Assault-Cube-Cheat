@@ -1,11 +1,13 @@
 #include "menu.h"
-#include "../core/displacement.h"
 
-void Menu::Render( float elapsed ) {
+void Menu::Render( ) {
+	if ( !m_bOpened )
+		m_pFocusItem.m_pItem = nullptr;
+
 	if ( m_flAlpha >= 0 && !m_bOpened )
-		m_flAlpha -= 5.f * elapsed;
+		m_flAlpha -= 5.f * ctx.m_flElapsed;
 	else if ( m_flAlpha <= 1 && m_bOpened )
-		m_flAlpha += 5.f * elapsed;
+		m_flAlpha += 5.f * ctx.m_flElapsed;
 
 	m_flAlpha = std::clamp( m_flAlpha, 0.f, 1.f );
 
@@ -16,24 +18,30 @@ void Menu::Render( float elapsed ) {
 
 	m_bRendering = true;
 
-	Render::Rect( m_vecPos - Vector2D( 1, 1 ), m_vecSize + 2, OUTLINE_DARK );
-	Render::Rect( m_vecPos, m_vecSize, OUTLINE_LIGHT );
-	Render::Rect( m_vecPos + 1, m_vecSize - Vector2D( 2, 2 ), OUTLINE_DARK );
-	Render::RectFilled( m_vecPos + 2, m_vecSize - Vector2D( 4, 4 ), BACKGROUND );
+	Render::Rect( m_vecPos - Vector2D{ 1, 1 }, m_vecSize, ACCENT );
+	Render::Rect( m_vecPos + Vector2D{ 1, 1 }, m_vecSize, ACCENT2 );
 
-	Render::Line( m_vecPos + Vector2D( 1, HEADER + 1 ), m_vecPos + Vector2D( m_vecSize.x - 2, HEADER + 1 ), OUTLINE_DARK );
-	Render::Line( m_vecPos + Vector2D( 0, HEADER ), m_vecPos + Vector2D( m_vecSize.x, HEADER ), OUTLINE_LIGHT );
-	Render::Line( m_vecPos + Vector2D( 1, HEADER - 1 ), m_vecPos + Vector2D( m_vecSize.x - 2, HEADER - 1 ), OUTLINE_DARK );
+	Render::RectFilled( m_vecPos, m_vecSize,  BACKGROUND );
+	Render::Rect( m_vecPos, m_vecSize,  OUTLINE_DARK );
+	Render::Rect( m_vecPos + Vector2D{ 1,1 }, m_vecSize - Vector2D{ 2, 2 },  OUTLINE_LIGHT );
 
-	Fonts::Menu.Render( m_vecPos + Vector2D( m_vecSize.x / 2 - 5 * 5, 25 ), ACCENT, "HAVOC" );
+	const auto barSize{ Vector2D{ BAR_SIZE, m_vecSize.y - 4 } };
+
+	Render::RectFilled( m_vecPos + Vector2D{ 2, 2 }, barSize, OUTLINE_DARK );
+	Render::Rect( m_vecPos + Vector2D{ 3, 3 }, barSize - Vector2D{ 2, 2 },  OUTLINE_LIGHT );
+
+	Fonts::Menu.Render( m_vecPos + Vector2D( BAR_SIZE / 2, 20 ), ACCENT, "HAVOC", CENTERED );
+	Fonts::Menu.Render( m_vecPos + Vector2D( m_vecSize.x - 120, m_vecSize.y - MARGIN + 2 ), DIM_ELEMENT, "Developed by", RIGHT );
+	Fonts::Menu.Render( m_vecPos + Vector2D( m_vecSize.x - 115, m_vecSize.y - MARGIN + 2 ), ACCENT, "Artie", LEFT );
 
 	RenderElements( );
 
 	m_bRendering = false;
+	m_pFocusItem.m_bFrameAfterFocus = false;
 }
 
 void Menu::HandleControls( ) {
-	const auto topBarHovered{ Input::Hovered( m_vecPos, { m_vecSize.x, 50 } ) };
+	const auto topBarHovered{ Input::Hovered( m_vecPos, { m_vecSize.x, MARGIN } ) };
 
 	if ( !m_bDraggingMenu && Input::Pressed( VK_LBUTTON ) && topBarHovered )
 		m_bDraggingMenu = true;
@@ -55,18 +63,25 @@ void Menu::HandleControls( ) {
 		}
 		else
 			m_bDraggingSize = false;
-		
+
 	}
 	else
 		SetCursor( false );
 
-	m_vecSize.x = std::clamp( static_cast< int >( m_vecSize.x ), 550, 1000 );
-	m_vecSize.y = std::clamp( static_cast< int >( m_vecSize.y ), 420, 1000 );
+	m_vecSize.x = std::clamp( static_cast< int >( m_vecSize.x ), 570, 1000 );
+	m_vecSize.y = std::clamp( static_cast< int >( m_vecSize.y ), 420, 737 );
 }
 
 void Menu::SetCursor( bool resize ) {
-	if ( resize )
+	/*if ( resize )
 		SetCursor( CursorResize );
 	else
-		SetCursor( CursorArrow );
+		SetCursor( CursorArrow );*/
+}
+
+void FocusItem_t::Update( CMenuItem* item ) {
+	this->m_pItem = item;
+	this->m_vecDrawPos = Menu::m_vecDrawPos;
+	this->m_bFadeOut = false;
+	this->m_bFrameAfterFocus = true;
 }

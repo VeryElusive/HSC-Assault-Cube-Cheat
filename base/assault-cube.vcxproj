@@ -42,12 +42,13 @@
     <ClInclude Include="dependencies\minhook\hde\table64.h" />
     <ClInclude Include="dependencies\minhook\minhook.h" />
     <ClInclude Include="dependencies\minhook\trampoline.h" />
-    <ClInclude Include="menu\controls\group.h" />
-    <ClInclude Include="menu\controls\tabs.h" />
+    <ClInclude Include="menu\controls\argument_types.h" />
+    <ClInclude Include="menu\controls\containers.h" />
     <ClInclude Include="menu\menu.h" />
     <ClInclude Include="sdk\color.h" />
     <ClInclude Include="sdk\vector.h" />
     <ClInclude Include="utils\gl_text.h" />
+    <ClInclude Include="utils\math.h" />
     <ClInclude Include="utils\render.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -97,8 +98,8 @@
     <OutDir>$(SolutionDir)build\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)log\$(ProjectName)\$(Configuration)\</IntDir>
     <TargetName>base</TargetName>
-    <ExternalIncludePath>$(SolutionDir)base\dependencies\freetype\include;$(SolutionDir)base\dependencies\json;$(DXSDK_DIR)Include;$(IncludePath);$(VC_IncludePath);$(WindowsSDK_IncludePath)</ExternalIncludePath>
-    <LibraryPath>E:\software major work\HSC-Assault-Cube-Cheat\base\dependencies\SDL-1.2.15\include;$(SolutionDir)base\dependencies\freetype\win32;$(DXSDK_DIR)Lib\x86;$(LibraryPath);$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
+    <ExternalIncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(SolutionDir)base\dependencies\freetype\include;$(SolutionDir)base\dependencies\json;$(DXSDK_DIR)Include;$(IncludePath);$(VC_IncludePath);$(WindowsSDK_IncludePath)</ExternalIncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;E:\software major work\HSC-Assault-Cube-Cheat\base\dependencies\SDL-1.2.15\include;$(SolutionDir)base\dependencies\freetype\win32;$(DXSDK_DIR)Lib\x86;$(LibraryPath);$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

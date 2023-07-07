@@ -21,8 +21,12 @@ LRESULT __stdcall Hooks::hkWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
 		EnableCursor( !Menu::m_bOpened );
 	}
 
-	if ( Menu::m_bOpened )
+	if ( Menu::m_bOpened ) {
+		if ( uMsg == WM_MOUSEWHEEL || uMsg == WM_MOUSEHWHEEL )
+			Input::m_flScroll += ( float ) GET_WHEEL_DELTA_WPARAM( wParam ) / ( float ) WHEEL_DELTA;
+
 		return 0;
+	}
 
 	return CallWindowProc( OldWndProc, hWnd, uMsg, wParam, lParam );
 }

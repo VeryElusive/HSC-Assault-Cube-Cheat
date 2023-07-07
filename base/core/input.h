@@ -4,6 +4,7 @@
 namespace Input {
 	inline bool m_bState[ 256 ]{ };
 	inline bool m_bPrevState[ 256 ]{ };
+	inline float m_flScroll{ };
 
 	inline Vector2D m_vecMousePos{ };
 	inline Vector2D m_vecMouseDelta{ };

@@ -19,7 +19,6 @@ void Input::Update( ) {
 }
 
 bool Input::Hovered( Vector2D pos, Vector2D size ) {
-	pos.y += 8;// idk why this is messing up
 	return ( m_vecMousePos > pos && m_vecMousePos < pos + size );
 }
 

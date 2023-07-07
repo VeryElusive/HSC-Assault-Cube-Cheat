@@ -12,6 +12,8 @@
 
 struct Context_t {
 	HWND hwnd;
+
+	float m_flElapsed{ };
 };
 
 inline Context_t ctx;

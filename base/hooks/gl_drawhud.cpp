@@ -21,13 +21,17 @@ void __cdecl Hooks::hkGlDrawHud( int w, int h, int curfps, int nquads, int curve
 
 	og( w, h, curfps, nquads, curvert, underwater, elapsed );
 
+	ctx.m_flElapsed = static_cast< float >( elapsed ) / 1000.f;
+
 	Input::Update( );
 	Render::InitFonts( );
 
 	Render::BeginDraw( );
 	{
 		// elapsed is in milliseconds, i want it in seconds
-		Menu::Render( static_cast< float >( elapsed ) / 1000.f );
+		Menu::Render( );
+
+		Input::m_flScroll = 0;
 	}
 	Render::EndDraw( );
 }

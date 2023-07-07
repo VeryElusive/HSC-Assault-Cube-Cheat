@@ -21,5 +21,5 @@ void Hooks::Init( ) {
 
 
 
-	OldWndProc = ( WNDPROC )SetWindowLongPtr( ctx.hwnd, GWL_WNDPROC, ( LONG_PTR )hkWndProc );
+	OldWndProc = reinterpret_cast< WNDPROC >( SetWindowLongPtr( ctx.hwnd, GWLP_WNDPROC, reinterpret_cast< LONG_PTR >( Hooks::hkWndProc ) ) );
 }
