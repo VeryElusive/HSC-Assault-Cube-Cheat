@@ -1,6 +1,6 @@
 #include "../menu.h"
 
-#define GET_HEIGHT( percent ) static_cast<int>( std::ceil( Menu::m_vecSize.y - MARGIN * 2 - ( rowBelow ? MARGIN : 0 ) * percent ) )
+#define GET_HEIGHT( percent ) static_cast<int>( std::ceil( ( Menu::m_vecSize.y - MARGIN * 2 - ( rowBelow ? MARGIN : 0 ) ) * percent ) )
 
 void CMenuGroup::Render( int groupNum, std::vector < CMenuGroup >& groups ) {
 	const auto& groupCount{ groups.size( ) };
@@ -66,7 +66,7 @@ void CMenuGroup::Render( int groupNum, std::vector < CMenuGroup >& groups ) {
 
 	const auto textX{ Fonts::Menu.GetTextSize( m_szName ).x + ( PADDING * 2 ) };
 	Render::RectFilled( Menu::m_vecDrawPos + Vector2D{ PADDING, -1.f }, { textX, 4.f, }, GROUP );
-	Fonts::Menu.Render( Menu::m_vecDrawPos + Vector2D{ ( PADDING * 2 ), -4.f }, Color( 255, 255, 255 ), m_szName, LEFT );
+	Fonts::Menu.Render( Menu::m_vecDrawPos + Vector2D{ ( PADDING * 2 ), 0.f }, Color( 255, 255, 255 ), m_szName, LEFT );
 
 	// new line
 	if ( groupNum == 2 && groupCount > 2 )
@@ -87,14 +87,14 @@ void CMenuGroup::Reset( ) {
 }
 
 void CMenuItem::RenderFocus( ) {
-	/*switch ( this->m_eItemType ) {
+	switch ( this->m_eItemType ) {
 	case SLIDER_FLOAT:
 		SliderFloatFocus( );
 		break;
 	case SLIDER_INT:
 		SliderIntFocus( );
 		break;
-	case COMBO:
+		/*case COMBO:
 		ComboFocus( );
 		break;
 	case MULTI_COMBO:
@@ -110,22 +110,22 @@ void CMenuItem::RenderFocus( ) {
 		TextInputFocus( );
 		break;
 	default:
-		break;
-	}*/
+		break;*/
+	}
 }
 
 void CMenuItem::Render( ) {
-	/*switch ( this->m_eItemType ) {
+	switch ( this->m_eItemType ) {
 	case CHECKBOX:
 		Checkbox( );
 		break;
-	case SLIDER_FLOAT:
+		case SLIDER_FLOAT:
 		SliderFloat( );
 		break;
 	case SLIDER_INT:
 		SliderInt( );
 		break;
-	case COMBO:
+		/*case COMBO:
 		Combo( );
 		break;
 	case MULTI_COMBO:
@@ -150,6 +150,6 @@ void CMenuItem::Render( ) {
 		TextInput( );
 		break;
 	default:
-		break;
-	}*/
+		break;*/
+	}
 }

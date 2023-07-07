@@ -22,13 +22,16 @@
     <ClCompile Include="hooks\gl_drawhud.cpp" />
     <ClCompile Include="hooks\wndproc.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="menu\controls\checkbox.cpp" />
     <ClCompile Include="menu\controls\group.cpp" />
+    <ClCompile Include="menu\controls\slider.cpp" />
     <ClCompile Include="menu\elements.cpp" />
     <ClCompile Include="menu\menu.cpp" />
     <ClCompile Include="utils\gl_text.cpp" />
     <ClCompile Include="utils\render.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="core\config.h" />
     <ClInclude Include="core\displacement.h" />
     <ClInclude Include="core\input.h" />
     <ClInclude Include="havoc.h" />

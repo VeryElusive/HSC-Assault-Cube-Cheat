@@ -8,6 +8,16 @@ void Menu::Register( ) {
 	m_cTabs[ 4 ].m_szName = "E";
 
 	auto aimbot{ &m_cTabs[ 0 ].m_vecSubtabs.emplace_back( "Aimbot", 2 ) };
+	{
+		auto generalGroup{ aimbot->AddGroup( "General", 1.f ) };
+		{
+			generalGroup->Register( ( "Checkbox" ), &ctx.m_cConfigs.m_bAimbotEnable );
+			generalGroup->Register( ( "Slider float" ), &ctx.m_cConfigs.m_flAimbotFOV, 0, 100 );
+			generalGroup->Register( ( "Slider int" ), &ctx.m_cConfigs.m_iAimbotSlider, 0, 100 );
+		}
+		auto otherGroup{ aimbot->AddGroup( "Other", 0.6f ) };
+		auto other2Group{ aimbot->AddGroup( "Other", 0.4f ) };
+	}
 
 	auto antiaim{ &m_cTabs[ 0 ].m_vecSubtabs.emplace_back( "Anti-aim", 2 ) };
 
@@ -64,7 +74,7 @@ void Menu::RenderElements( ) {
 		for ( int i{ }; i < 5; ++i ) {
 			const auto pos{ Menu::m_vecPos + Vector2D( static_cast<int>( Math::Lerp( m_cTabs[ i ].m_flAnimation, static_cast<float>( BAR_SIZE / 2 ), static_cast< float >( tabSize.x / 2 + 10 ) ) ), 100 + sizeDenom * i ) };
 
-			const auto hovered{ Input::Hovered( pos - Vector2D( tabSize.x / 2 + BAR_SIZE / 2, tabSize.y ),  Vector2D{BAR_SIZE, tabSize.y } ) };
+			const auto hovered{ Input::Hovered( pos - Vector2D( tabSize.x / 2 + BAR_SIZE / 2, tabSize.y - 5 ),  Vector2D{ BAR_SIZE, tabSize.y } ) };
 			if ( hovered && ( Input::Pressed( VK_LBUTTON ) || Input::Pressed( VK_RBUTTON ) || Input::Pressed( VK_MBUTTON ) ) ) {
 				m_iSelectedTab = i;
 				if ( Input::Pressed( VK_RBUTTON ) && m_cTabs[ i ].m_vecSubtabs.size( ) > 1 )
@@ -82,9 +92,9 @@ void Menu::RenderElements( ) {
 			else
 				m_cTabs[ i ].m_flAnimation = Math::Interpolate( m_cTabs[ i ].m_flAnimation, 0.f, ANIMATION_SPEED );
 
-			if ( m_cTabs[ i ].m_flAnimation <= 0.05f )
+			if ( m_cTabs[ i ].m_flAnimation <= 0.005f )
 				m_cTabs[ i ].m_flAnimation = 0.f;
-			else if ( m_cTabs[ i ].m_flAnimation >= 0.95f )
+			else if ( m_cTabs[ i ].m_flAnimation >= 0.995f )
 				m_cTabs[ i ].m_flAnimation = 1.f;
 
 			Fonts::Tabs.Render( pos, m_cTabs[ i ].m_cColor, m_cTabs[ i ].m_szName, CENTERED );
@@ -107,4 +117,18 @@ void Menu::RenderElements( ) {
 			group.Render( i, newActiveTab.m_pSelectedSubtab->m_vecGroups );
 		}
 	}
+
+	Render::RectFilled( m_vecPos + Vector2D{ BAR_SIZE, MARGIN }, m_vecSize - Vector2D{ BAR_SIZE, MARGIN * 2 }, BACKGROUND.Alpha( Menu::m_pFocusItem.m_flFocusAnim * 0.7f * 255.f ) );
+
+	if ( Menu::m_pFocusItem.m_pItem ) {
+		auto& element{ *Menu::m_pFocusItem.m_pItem };
+		Menu::m_pFocusItem.m_flFocusAnim = Math::Interpolate( Menu::m_pFocusItem.m_flFocusAnim, m_pFocusItem.m_bFadeOut ? 0.f : 1.f, ANIMATION_SPEED );
+
+		element.RenderFocus( );
+	}
+	else
+		Menu::m_pFocusItem.m_flFocusAnim = Math::Interpolate( Menu::m_pFocusItem.m_flFocusAnim, 0.f, ANIMATION_SPEED );
+
+	if ( Menu::m_pFocusItem.m_flFocusAnim <= 0.01f )
+		Menu::m_pFocusItem.m_pItem = nullptr;
 }

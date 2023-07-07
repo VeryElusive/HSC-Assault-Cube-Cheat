@@ -17,5 +17,11 @@ public:
 		return ( ( r & 0xff ) << 16 ) + ( ( g & 0xff ) << 8 ) + ( b & 0xff );
 	}
 
+	Color Alpha( const uint8_t nValue ) const {
+		auto colCopy{ *this };
+		colCopy.a = nValue;
+		return colCopy;
+	}
+
 	uint8_t r{ }, g{ }, b{ }, a{ 255 };
 };
