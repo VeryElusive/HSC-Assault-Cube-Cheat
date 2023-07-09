@@ -6,7 +6,6 @@ enum EItemType {
 	SLIDER_FLOAT,
 	COMBO,
 	MULTI_COMBO,
-	KEY_BIND,
 	COLOR_PICKER,
 	LABEL,
 	BUTTON,
@@ -76,11 +75,11 @@ struct ColorPickerArgs_t {
 };
 
 struct ButtonArgs_t {
-	ButtonArgs_t( const char* name, void* callBack, int maxGroups )
+	ButtonArgs_t( const char* name, std::function<void( )> callBack, int maxGroups )
 		: m_szName( name ), m_pCallback( callBack ), m_iMaxGroups( maxGroups ) { };
 
 	float m_flTimer{ };
-	void* m_pCallback{ };
+	std::function<void( )> m_pCallback{ };
 	const char* m_szName{ };
 	int m_iMaxGroups{ };
 	bool m_bDown{ };

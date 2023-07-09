@@ -35,6 +35,36 @@ void Render::SetClipping( Vector2D pos, Vector2D size ) {
     glScissor( pos.x, pos.y, size.x, size.y );
 }
 
+void Render::Gradient( Vector2D pos, Vector2D size, Color col, Color col2, bool horizontal ) {
+    if ( Menu::m_bRendering ) {
+        col.a *= Menu::m_flAlpha;
+        col2.a *= Menu::m_flAlpha;
+    }
+
+    glColor4ub( col.r, col.g, col.b, col.a );
+
+    glBegin( GL_QUADS );
+
+    glVertex2f( pos.x, pos.y );
+
+    if ( !horizontal )
+        glColor4ub( col2.r, col2.g, col2.b, col2.a );
+
+    glVertex2f( pos.x + size.x, pos.y );
+
+    if ( horizontal )
+        glColor4ub( col2.r, col2.g, col2.b, col2.a );
+
+    glVertex2f( pos.x + size.x, pos.y + size.y );
+
+    if ( !horizontal )
+        glColor4ub( col.r, col.g, col.b, col.a );
+
+    glVertex2f( pos.x, pos.y + size.y );
+
+    glEnd( );
+}
+
 void Render::Rect( Vector2D pos, Vector2D size, Color col ) {
     if ( Menu::m_bRendering )
         col.a *= Menu::m_flAlpha;

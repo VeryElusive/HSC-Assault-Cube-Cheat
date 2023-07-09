@@ -13,8 +13,8 @@
 
 struct Context_t {
 	HWND hwnd;
-	Config_t m_cConfig{ };
 	float m_flElapsed{ };
+	float m_flTime{ };
 };
 
 inline Context_t ctx;

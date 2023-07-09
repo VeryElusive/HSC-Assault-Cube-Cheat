@@ -12,11 +12,15 @@ void Menu::Register( ) {
 	{
 		auto generalGroup{ aimbot->AddGroup( "General", 1.f ) };
 		{
-			generalGroup->Register( ( "Checkbox" ), &ctx.m_cConfig.m_bAimbotEnable );
-			generalGroup->Register( ( "Slider float" ), &ctx.m_cConfig.m_flAimbotFOV, 0, 100 );
-			generalGroup->Register( ( "Slider int" ), &ctx.m_cConfig.m_iAimbotSlider, 0, 100 );
-			generalGroup->Register( ( "Combo" ), &ctx.m_cConfig.m_iAimbotCombo, 4, comboElements );
+			generalGroup->Register( ( "Checkbox" ), &Configs::m_cConfig.m_bAimbotEnable );
+			generalGroup->Register( &Configs::m_cConfig.m_cColorPickerTest );
+			generalGroup->Register( ( "Slider float" ), &Configs::m_cConfig.m_flAimbotFOV, 0, 100 );
+			generalGroup->Register( ( "Slider int" ), &Configs::m_cConfig.m_iAimbotSlider, 0, 100 );
+			generalGroup->Register( ( "Combo" ), &Configs::m_cConfig.m_iAimbotCombo, 4, comboElements );
 			generalGroup->Register( ( "Multi combo" ), 5, multiComboElements );
+			generalGroup->Register( ( "Button" ), [ ] {
+
+				} );
 		}
 		auto otherGroup{ aimbot->AddGroup( "Other", 0.6f ) };
 		auto other2Group{ aimbot->AddGroup( "Other", 0.4f ) };
@@ -27,7 +31,31 @@ void Menu::Register( ) {
 	auto test{ &m_cTabs[ 1 ].m_vecSubtabs.emplace_back( "test", 2 ) };
 	auto test1{ &m_cTabs[ 2 ].m_vecSubtabs.emplace_back( "test", 2 ) };
 	auto test2{ &m_cTabs[ 3 ].m_vecSubtabs.emplace_back( "test", 2 ) };
-	auto test3{ &m_cTabs[ 4 ].m_vecSubtabs.emplace_back( "test", 2 ) };
+
+	auto configSubtab{ &m_cTabs[ 4 ].m_vecSubtabs.emplace_back( "Configs", 1 ) };
+	{
+		auto configGroup{ configSubtab->AddGroup( "Configurations", 1.f ) };
+
+		configGroup->Register( &selectedConfig );
+		configGroup->Register( &typedConfig );
+		configGroup->Register( "Create", [ ] {
+			const auto filePath{ typedConfig };
+			Configs::SaveCFG( filePath );
+			} );
+		configGroup->Register( "Remove", [ ] {
+			Configs::Remove( selectedConfig );
+			} );
+
+		configGroup->Register( "Load", [ ] {
+			const auto filePath{ Configs::m_vecFileNames.at( selectedConfig ) };
+			Configs::LoadCFG( filePath );
+			} );
+
+		configGroup->Register( "Save", [ ] {
+			const auto filePath{ Configs::m_vecFileNames.at( selectedConfig ) };
+			Configs::SaveCFG( filePath );
+			} );
+	}
 }
 
 void Menu::LerpToCol( Color& col, Color to ) {
@@ -121,7 +149,7 @@ void Menu::RenderElements( ) {
 		}
 	}
 
-	Render::RectFilled( m_vecPos + Vector2D{ BAR_SIZE + 1, MARGIN - 1 }, m_vecSize - Vector2D{ BAR_SIZE + MARGIN, MARGIN * 2 - 3 }, BACKGROUND.Alpha( Menu::m_pFocusItem.m_flFocusAnim * 0.7f * 255.f ) );
+	Render::RectFilled( m_vecPos + Vector2D{ BAR_SIZE + 1, MARGIN - 5 }, m_vecSize - Vector2D{ BAR_SIZE + MARGIN, MARGIN * 2 - 7 }, BACKGROUND.Alpha( Menu::m_pFocusItem.m_flFocusAnim * 0.7f * 255.f ) );
 
 	if ( Menu::m_pFocusItem.m_pItem ) {
 		auto& element{ *Menu::m_pFocusItem.m_pItem };

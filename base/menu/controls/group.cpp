@@ -66,7 +66,7 @@ void CMenuGroup::Render( int groupNum, std::vector < CMenuGroup >& groups ) {
 
 	const auto textX{ Fonts::Menu.GetTextSize( m_szName ).x + ( PADDING * 2 ) };
 	Render::RectFilled( Menu::m_vecDrawPos + Vector2D{ PADDING, -1.f }, { textX, 4.f, }, GROUP );
-	Fonts::Menu.Render( Menu::m_vecDrawPos + Vector2D{ ( PADDING * 2 ), 0.f }, Color( 255, 255, 255 ), m_szName, LEFT );
+	Fonts::Menu.Render( Menu::m_vecDrawPos + Vector2D{ ( PADDING * 2 ), -4 }, Color( 255, 255, 255 ), m_szName, LEFT );
 
 	// new line
 	if ( groupNum == 2 && groupCount > 2 )
@@ -100,9 +100,6 @@ void CMenuItem::RenderFocus( ) {
 	case MULTI_COMBO:
 		MultiComboFocus( );
 		break;
-		/*case KEY_BIND:
-		KeybindFocus( );
-		break;
 	case COLOR_PICKER:
 		ColorPickerFocus( );
 		break;
@@ -110,7 +107,7 @@ void CMenuItem::RenderFocus( ) {
 		TextInputFocus( );
 		break;
 	default:
-		break;*/
+		break;
 	}
 }
 
@@ -131,14 +128,8 @@ void CMenuItem::Render( ) {
 	case MULTI_COMBO:
 		MultiCombo( );
 		break;
-		/*case KEY_BIND:
-		Keybind( );
-		break;
-	case COLOR_PICKER:
+		case COLOR_PICKER:
 		ColorPicker( );
-		break;
-	case LABEL:
-		Label( );
 		break;
 	case BUTTON:
 		Button( );
@@ -146,10 +137,10 @@ void CMenuItem::Render( ) {
 	case LIST_BOX:
 		Listbox( );
 		break;
-	case TEXT_INPUT:
+		case TEXT_INPUT:
 		TextInput( );
 		break;
 	default:
-		break;*/
+		break;
 	}
 }

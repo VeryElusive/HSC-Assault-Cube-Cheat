@@ -22,6 +22,7 @@ void __cdecl Hooks::hkGlDrawHud( int w, int h, int curfps, int nquads, int curve
 	og( w, h, curfps, nquads, curvert, underwater, elapsed );
 
 	ctx.m_flElapsed = static_cast< float >( elapsed ) / 1000.f;
+	ctx.m_flTime += ctx.m_flElapsed;
 
 	Input::Update( );
 	Render::InitFonts( );

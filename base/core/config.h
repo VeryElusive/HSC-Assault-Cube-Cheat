@@ -1,4 +1,7 @@
 #pragma once
+#include "../sdk/color.h"
+#include <thread>
+#include <filesystem>
 
 struct Config_t {
 	bool m_bAimbotEnable{ };
@@ -6,5 +9,21 @@ struct Config_t {
 	int m_iAimbotSlider{ };
 	int m_iAimbotCombo{ };
 
+	Color m_cColorPickerTest{ };
+
 	bool m_bOptions[ 5 ]{ };
 };
+
+namespace Configs {
+	inline std::vector<std::string> m_vecFileNames = { };
+	inline Config_t m_cConfig{ };
+	inline std::filesystem::path m_fsPath = "C:\\Havoc-Assault-Cube\\Configs\\";
+
+	void SaveCFG( std::string filePath );
+
+	void LoadCFG( std::string filePath );
+
+	void Refresh( );
+
+	void Remove( const std::size_t nIndex );
+}

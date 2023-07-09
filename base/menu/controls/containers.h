@@ -31,7 +31,7 @@ public:
 		m_pArgs = new ColorPickerArgs_t( alpha );
 	};
 
-	CMenuItem( const char* name, void* callback, int width, std::function<bool( )> show )
+	CMenuItem( const char* name, std::function<void( )> callback, int width, std::function<bool( )> show )
 		: m_szName( name ), m_eItemType( BUTTON ), m_fnShow( show ) {
 		m_pArgs = new ButtonArgs_t( name, callback, width );
 	};
@@ -80,8 +80,6 @@ private:
 	void Button( );
 	void TextInput( );
 	void TextInputFocus( );
-	void Keybind( );
-	void KeybindFocus( );
 	void ColorPicker( );
 	void ColorPickerFocus( );
 	void Combo( );
@@ -107,7 +105,7 @@ public:
 		m_vecItems.emplace_back( name, value, min, max, m_iParentMaxGroups, show );
 	};
 
-	void Register( const char* name, void* callback, std::function<bool( )> show = [ ]( ) {return true; } ) {
+	void Register( const char* name, std::function<void( )> callback, std::function<bool( )> show = [ ]( ) {return true; } ) {
 		m_vecItems.emplace_back( name, callback, m_iParentMaxGroups, show );
 	};
 

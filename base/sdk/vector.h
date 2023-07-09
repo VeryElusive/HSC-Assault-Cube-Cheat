@@ -39,6 +39,10 @@ struct Vector2D {
 		return Vector2D( x * v, y * v );
 	}
 
+	__forceinline Vector2D operator/( float v ) const {
+		return Vector2D( x / v, y / v );
+	}
+
 	__forceinline void operator-=( Vector2D v ) {
 		this->x -= v.x;
 		this->y -= v.y;
@@ -61,10 +65,10 @@ struct Vector2D {
 
 	Vector2D( ) {};
 
-	Vector2D( int x, int y ) : x( x ), y( y ) {};
-	Vector2D( float x, float y ) : x( static_cast<int>( x ) ), y( static_cast< int >( y ) ) {};
-	Vector2D( int x, float y ) : x( static_cast<int>( x ) ), y( static_cast< int >( y ) ) {};
-	Vector2D( float x, int y ) : x( static_cast<int>( x ) ), y( static_cast< int >( y ) ) {};
-	Vector2D( long x, long y ) : x( static_cast<int>( x ) ), y( static_cast< int >( y ) ) {};
-	Vector2D( short x, short y ) : x( static_cast<int>( x ) ), y( static_cast< int >( y ) ) {};
+	constexpr Vector2D( int x, int y ) : x( x ), y( y ) {};
+	constexpr Vector2D( float x, float y ) : x( static_cast<int>( x ) ), y( static_cast< int >( y ) ) {};
+	constexpr Vector2D( int x, float y ) : x( static_cast<int>( x ) ), y( static_cast< int >( y ) ) {};
+	constexpr Vector2D( float x, int y ) : x( static_cast<int>( x ) ), y( static_cast< int >( y ) ) {};
+	constexpr Vector2D( long x, long y ) : x( static_cast<int>( x ) ), y( static_cast< int >( y ) ) {};
+	constexpr Vector2D( short x, short y ) : x( static_cast<int>( x ) ), y( static_cast< int >( y ) ) {};
 };

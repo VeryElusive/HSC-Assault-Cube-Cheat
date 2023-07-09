@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="core\config.cpp" />
     <ClCompile Include="core\hooks.cpp" />
     <ClCompile Include="core\input.cpp" />
     <ClCompile Include="core\memory.cpp" />
@@ -22,11 +23,15 @@
     <ClCompile Include="hooks\gl_drawhud.cpp" />
     <ClCompile Include="hooks\wndproc.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="menu\controls\button.cpp" />
     <ClCompile Include="menu\controls\checkbox.cpp" />
+    <ClCompile Include="menu\controls\colorpicker.cpp" />
     <ClCompile Include="menu\controls\combo.cpp" />
     <ClCompile Include="menu\controls\group.cpp" />
+    <ClCompile Include="menu\controls\listbox.cpp" />
     <ClCompile Include="menu\controls\multicombo.cpp" />
     <ClCompile Include="menu\controls\slider.cpp" />
+    <ClCompile Include="menu\controls\textinput.cpp" />
     <ClCompile Include="menu\elements.cpp" />
     <ClCompile Include="menu\menu.cpp" />
     <ClCompile Include="utils\gl_text.cpp" />
