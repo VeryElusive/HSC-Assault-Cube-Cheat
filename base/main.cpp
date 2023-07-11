@@ -8,9 +8,9 @@ void Entry( HMODULE hModule ) {
 
 	//CursorArrow = LoadCursor( 0, IDC_ARROW );
 	//CursorResize = LoadCursor( 0, IDC_SIZENWSE );
+	Menu::Register( );
 
 	Hooks::Init( );
-	Menu::Register( );
 
 	while ( !GetAsyncKeyState( VK_F11 ) )
 		std::this_thread::sleep_for( std::chrono::milliseconds( 200 ) );

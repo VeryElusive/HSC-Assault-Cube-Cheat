@@ -32,6 +32,7 @@ namespace Hooks {
 
 	NEW_HOOK( GlDrawHud, void, __cdecl ) int w, int h, int curfps, int nquads, int curvert, bool underwater, int elapsed );
 	NEW_HOOK( GlSwapBuffers, bool, __stdcall ) HDC hDc );
+	NEW_HOOK( gun__attack, bool __fastcall ) Gun_t* ecx, int edx, vec* position );
 
 	inline WNDPROC OldWndProc{ };
 	LRESULT __stdcall	hkWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );

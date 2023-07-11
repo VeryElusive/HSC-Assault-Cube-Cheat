@@ -21,6 +21,7 @@
     <ClCompile Include="dependencies\minhook\hook.c" />
     <ClCompile Include="dependencies\minhook\trampoline.c" />
     <ClCompile Include="hooks\gl_drawhud.cpp" />
+    <ClCompile Include="hooks\gun__attack.cpp" />
     <ClCompile Include="hooks\wndproc.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="menu\controls\button.cpp" />
@@ -57,6 +58,8 @@
     <ClInclude Include="menu\controls\containers.h" />
     <ClInclude Include="menu\menu.h" />
     <ClInclude Include="sdk\color.h" />
+    <ClInclude Include="sdk\gun.h" />
+    <ClInclude Include="sdk\player.h" />
     <ClInclude Include="sdk\vector.h" />
     <ClInclude Include="utils\gl_text.h" />
     <ClInclude Include="utils\math.h" />

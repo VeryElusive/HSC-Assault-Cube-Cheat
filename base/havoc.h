@@ -10,6 +10,7 @@
 #include "core/memory.h"
 
 #include "sdk/vector.h"
+#include "sdk/player.h"
 
 struct Context_t {
 	HWND hwnd;

@@ -10,6 +10,11 @@ void Hooks::Init( ) {
 	GlDrawHud.Hook(
 		reinterpret_cast< void* >( Memory::FindPattern( "55 8B EC 83 E4 F8 81 EC ? ? ? ? A1 ? ? ? ? 89" ) ),  
 		&hkGlDrawHud );	
+
+	// gun::attack
+	gun__attack.Hook(
+		reinterpret_cast< void* >( Memory::FindPattern( "83 EC 24 53 8B 1D ? ? ? ? 56" ) ),
+		&hkgun__attack );
 	
 
 	/*HMODULE hMod = GetModuleHandle( "opengl32.dll" );

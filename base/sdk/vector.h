@@ -8,6 +8,7 @@ struct Vector {
 	Vector( int x, int y, int z ) : x( x ), y( y ), z( z ) {};
 };
 
+
 struct Vector2D {
 	int x{ }, y{ };
 
@@ -72,3 +73,21 @@ struct Vector2D {
 	constexpr Vector2D( long x, long y ) : x( static_cast<int>( x ) ), y( static_cast< int >( y ) ) {};
 	constexpr Vector2D( short x, short y ) : x( static_cast<int>( x ) ), y( static_cast< int >( y ) ) {};
 };
+
+// taken directly from assaultcube
+
+struct vec
+{
+    union
+    {
+        struct { float x, y, z; };
+        float v[ 3 ];
+        int i[ 3 ];
+    };
+
+    vec( ) { x = y = z = 0; }
+    vec( float a, float b, float c ) : x( a ), y( b ), z( c ) {}
+    vec( float* v ) : x( v[ 0 ] ), y( v[ 1 ] ), z( v[ 2 ] ) {}
+
+};
+
