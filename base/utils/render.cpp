@@ -5,6 +5,10 @@
 void Render::BeginDraw( ) {
     GLint viewport[ 4 ];
     glGetIntegerv( GL_VIEWPORT, viewport );
+
+    m_vecSize.x = viewport[ 0 ];
+    m_vecSize.y = viewport[ 1 ];
+
     glViewport( 0, 0, viewport[ 2 ], viewport[ 3 ] );
     glMatrixMode( GL_PROJECTION );
     glLoadIdentity( );

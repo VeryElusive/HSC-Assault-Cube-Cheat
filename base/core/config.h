@@ -5,7 +5,8 @@
 
 struct Config_t {
 	bool m_bAimbotEnable{ };
-	float m_flAimbotFOV{ };
+	bool m_bAimbotThroughWalls{ };
+	float m_iAimbotSliderFloat{ };
 	int m_iAimbotSlider{ };
 	int m_iAimbotCombo{ };
 

@@ -1,24 +1,25 @@
 #include "../core/hooks.h"
 #include "../core/displacement.h"
+#include "../features/ragebot.h"
 
-bool __fastcall Hooks::hkgun__attack( Gun_t* ecx, int edx, vec* position ) {
+// angle = 'targ' in assaultcube
+bool __fastcall Hooks::hkgun__attack( Gun_t* ecx, int edx, Vector* angle ) {
 	const auto og{ gun__attack.Original<decltype( &hkgun__attack )>( ) };
 
-	if ( !ecx->m_pOwner->m_bAttacking )
-		return og( ecx, edx, position );
+	if ( !Configs::m_cConfig.m_bAimbotEnable
+		|| !ecx->m_pOwner->m_bAttacking
+		|| ecx->m_pOwner != *Displacement::LocalPlayer )
+		return og( ecx, edx, angle );
 
-	for ( int i{ }; i < *Displacement::EntityListSize; ++i )
-	{
-		if ( reinterpret_cast< Player_t* >( Displacement::EntityListBase[ i ] ) == nullptr )
-			continue;
+	auto& local{ ( *Displacement::LocalPlayer ) };
 
-		auto player = reinterpret_cast< Player_t* >( Displacement::EntityListBase[ i ] );
+	const auto backupOrigin{ local->m_vecOrigin };
 
-		if ( player == ecx->m_pOwner )
-			ecx->m_pOwner->m_bAttacking = false;
-	}
+	Features::Ragebot.Main( angle );
 
-	//ecx->m_pOwner->m_bAttacking = false;
+	auto ret{ og( ecx, edx, angle ) };
 
-	return og( ecx, edx, position );
+	( *Displacement::LocalPlayer )->m_vecOrigin = backupOrigin;
+
+	return ret;
 }

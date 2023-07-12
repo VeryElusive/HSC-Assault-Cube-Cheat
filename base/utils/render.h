@@ -15,6 +15,7 @@ namespace Fonts {
 }
 
 namespace Render {
+	inline Vector2D m_vecSize{ };
 	void BeginDraw( );
 	void EndDraw( );
 	void InitFonts( );

@@ -1,11 +1,33 @@
 #pragma once
+#include <cmath>
 
 struct Vector {
-	int x{ }, y{ }, z{ };
+	float x{ }, y{ }, z{ };
 
 	Vector( ) {};
 
+	float Dot( const Vector& v ) const {
+		return ( this->x * v.x +
+			this->y * v.y );
+	}
+
+	float LengthSquared( ) const {
+		return ( this->Dot( *this ) );
+	}
+
+	float Length( ) const {
+		return ( std::sqrt( this->LengthSquared( ) ) );
+	}
+
+	float DistTo( const Vector& vecEnd ) const {
+		return ( *this - vecEnd ).Length( );
+	}
+	Vector operator-( const Vector& vecSubtract ) const {
+		return Vector( this->x - vecSubtract.x, this->y - vecSubtract.y, this->z - vecSubtract.z );
+	}
+
 	Vector( int x, int y, int z ) : x( x ), y( y ), z( z ) {};
+	Vector( float x, float y, float z ) : x( x ), y( y ), z( z ) {};
 };
 
 
@@ -74,20 +96,7 @@ struct Vector2D {
 	constexpr Vector2D( short x, short y ) : x( static_cast<int>( x ) ), y( static_cast< int >( y ) ) {};
 };
 
-// taken directly from assaultcube
-
-struct vec
-{
-    union
-    {
-        struct { float x, y, z; };
-        float v[ 3 ];
-        int i[ 3 ];
-    };
-
-    vec( ) { x = y = z = 0; }
-    vec( float a, float b, float c ) : x( a ), y( b ), z( c ) {}
-    vec( float* v ) : x( v[ 0 ] ), y( v[ 1 ] ), z( v[ 2 ] ) {}
+struct Vector4D {
+	int x{ }, y{ }, z{}, v{ };
 
 };
-

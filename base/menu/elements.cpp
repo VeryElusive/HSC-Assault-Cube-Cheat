@@ -12,15 +12,9 @@ void Menu::Register( ) {
 	{
 		auto generalGroup{ aimbot->AddGroup( "General", 1.f ) };
 		{
-			generalGroup->Register( ( "Checkbox" ), &Configs::m_cConfig.m_bAimbotEnable );
-			generalGroup->Register( &Configs::m_cConfig.m_cColorPickerTest );
-			generalGroup->Register( ( "Slider float" ), &Configs::m_cConfig.m_flAimbotFOV, 0, 100 );
-			generalGroup->Register( ( "Slider int" ), &Configs::m_cConfig.m_iAimbotSlider, 0, 100 );
-			generalGroup->Register( ( "Combo" ), &Configs::m_cConfig.m_iAimbotCombo, 4, comboElements );
-			generalGroup->Register( ( "Multi combo" ), 5, multiComboElements );
-			generalGroup->Register( ( "Button" ), [ ] {
+			generalGroup->Register( ( "Enable" ), &Configs::m_cConfig.m_bAimbotEnable );
+			generalGroup->Register( ( "Through walls" ), &Configs::m_cConfig.m_bAimbotThroughWalls );
 
-				} );
 		}
 		auto otherGroup{ aimbot->AddGroup( "Other", 0.6f ) };
 		auto other2Group{ aimbot->AddGroup( "Other", 0.4f ) };
@@ -30,7 +24,23 @@ void Menu::Register( ) {
 
 	auto test{ &m_cTabs[ 1 ].m_vecSubtabs.emplace_back( "test", 2 ) };
 	auto test1{ &m_cTabs[ 2 ].m_vecSubtabs.emplace_back( "test", 2 ) };
-	auto test2{ &m_cTabs[ 3 ].m_vecSubtabs.emplace_back( "test", 2 ) };
+	auto test2{ &m_cTabs[ 3 ].m_vecSubtabs.emplace_back( "Elements", 2 ) };
+	{
+		auto generalGroup{ test2->AddGroup( "Elements", 1.f ) };
+		{
+			generalGroup->Register( ( "Checkbox" ), &Configs::m_cConfig.m_bAimbotEnable );
+			generalGroup->Register( &Configs::m_cConfig.m_cColorPickerTest );
+			generalGroup->Register( ( "Slider float" ), &Configs::m_cConfig.m_iAimbotSliderFloat, 0, 100 );
+			generalGroup->Register( ( "Slider int" ), &Configs::m_cConfig.m_iAimbotSlider, 0, 100 );
+			generalGroup->Register( ( "Combo" ), &Configs::m_cConfig.m_iAimbotCombo, 4, comboElements );
+			generalGroup->Register( ( "Multi combo" ), 5, multiComboElements );
+			generalGroup->Register( ( "Button" ), [ ] {
+
+				} );
+		}
+		auto otherGroup{ test2->AddGroup( "Other", 0.6f ) };
+		auto other2Group{ test2->AddGroup( "Other", 0.4f ) };
+	}
 
 	auto configSubtab{ &m_cTabs[ 4 ].m_vecSubtabs.emplace_back( "Configs", 1 ) };
 	{
