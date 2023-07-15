@@ -15,6 +15,9 @@ void CRagebot::Main( Vector* angle ) {
 		if ( player->m_iTeam == local->m_iTeam )
 			continue;
 
+		if ( player->m_iState )
+			continue;
+
 		const auto orDiff{ local->m_vecOrigin.DistTo( player->m_vecOrigin ) };
 		if ( orDiff < bestOriginDiff ) {
 			bestOriginDiff = orDiff;
