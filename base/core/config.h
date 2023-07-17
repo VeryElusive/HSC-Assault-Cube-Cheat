@@ -10,7 +10,7 @@ struct Config_t {
 	int m_iAimbotSlider{ };
 	int m_iAimbotCombo{ };
 
-	Color m_cColorPickerTest{ };
+	Color m_cColorPickerTest{ Color( 115, 155, 255 ) };
 
 	bool m_bOptions[ 5 ]{ };
 };

@@ -26,8 +26,8 @@ void CRagebot::Main( Vector* angle ) {
 	}
 
 	if ( bestPlayer ) {
-		if ( Configs::m_cConfig.m_bAimbotThroughWalls )
-			local->m_vecOrigin = bestPlayer->m_vecOrigin;
+		//if ( Configs::m_cConfig.m_bAimbotThroughWalls )
+		//	local->m_vecOrigin = bestPlayer->m_vecOrigin;
 
 		*angle = bestPlayer->m_vecOrigin;// getAngle( ( *Displacement::LocalPlayer )->m_vecOrigin, bestPlayer->m_vecOrigin );
 	}

@@ -13,7 +13,7 @@ void Menu::Register( ) {
 		auto generalGroup{ aimbot->AddGroup( "General", 1.f ) };
 		{
 			generalGroup->Register( ( "Enable" ), &Configs::m_cConfig.m_bAimbotEnable );
-			generalGroup->Register( ( "Through walls" ), &Configs::m_cConfig.m_bAimbotThroughWalls );
+			//generalGroup->Register( ( "Through walls" ), &Configs::m_cConfig.m_bAimbotThroughWalls );
 
 		}
 		auto otherGroup{ aimbot->AddGroup( "Other", 0.6f ) };
